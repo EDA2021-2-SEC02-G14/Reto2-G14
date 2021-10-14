@@ -70,10 +70,9 @@ def loadNacionalidades(catalog):
     for nacion in input_file:
         model.addnacion(catalog,nacion)
         
-
-
-
-
+def getNacionality(catalog, nacionality):
+    nacionality = model.getObraNacion(catalog,  nacionality)
+    return nacionality
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
