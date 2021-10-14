@@ -38,7 +38,7 @@ def printMenu():
     print("Bienvenido")
     print("1- inicializar el catálogo")
     print("2- Cargar inform1acion del catálogo")
-    print("")
+    print("3- Numero de  obras por nacionalidad")
 
 catalog = None
 
@@ -57,7 +57,11 @@ while True:
         print("Cargando información de los archivos ....")
         print('Obras cargadas: ' + str(controller.obrasSize(cont)))
         print('Autores cargados: ' + str(controller.artistaSize(cont)))
-        print('Nacionalidades: ' + str(controller)) 
+        
+    elif int(inputs[0]) ==3:
+        nacion = input("Buscando nacionalidades?: ")
+        resultado = controller.getNacionality(cont, nacion)
+        print(resultado)
 
 
     else:

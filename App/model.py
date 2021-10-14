@@ -57,7 +57,7 @@ def newCatalog():
                                 loadfactor=4.0, 
                                 comparefunction=compareMapYear)
 
-    catalog ['Nacionality'] = lt.newMap(194,
+    catalog ['Nacionality'] = mp.newMap(194,
                                         maptype='CHAINING',
                                         loadfactor= 4.0,
                                         comparefunction= compareNation)
@@ -89,6 +89,11 @@ def newAuthor(name):
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+def addObra(catalog,obra):
+    lt.addLast(catalog['obras'],obra)
+    mp.put(catalog['obras'],obra['artworks'],obra)
+    artistas = obra['obras'].split(",")
+
 
 def compareMapYear(id, tag):
     tagentry = me.getKey(tag)
@@ -112,11 +117,33 @@ def compareArtistName(keyname, author):
     else:
         return -1
 
-def compareNation(Department,tag):
+def compareNation(nacionality,tag):
     tagentry = me.getKey(tag)
-    if(Department == tagentry):
+    if(nacionality == tagentry):
         return 0
-    elif (Department > tagentry):
+    elif (nacionality > tagentry):
         return 1 
     else: 
         return -1 
+
+def addDepartment(catalog, department):
+    lt.addLast(catalog['Department'], department)
+    mp.put(catalog['Department'], department)
+
+def getDepartment(catalog, Department):
+    Department = mp.get(catalog['Department'], Department)
+    if Department:
+        return me.getValue(Department)['Department']
+    return None 
+
+def getObraNacion(catalog, nacionality):
+    nacion = mp.get(catalog['Nacionality'], nacionality)
+    if nacion:
+        return me.getValue(nacion)
+    return None
+
+def obrasSize(catalog):
+    return mp.size(catalog['obras'])
+
+def artistaSize (catalog):
+    return mp.size(catalog['artistas'])
