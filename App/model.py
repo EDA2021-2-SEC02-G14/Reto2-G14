@@ -116,7 +116,7 @@ def addObra(catalog,obra):
     mp.put(catalog['ArtworksId'],obra['Title'],obra)
     artistas = obra['Artists'].split(",")
     for artista in artistas:
-        addObraAutor(catalog, artista.strip,obra)
+        addObraAutor(catalog, artista,obra)
     addObraAnio(catalog, obra)
 
 def compareArtistName(keyname, author):
