@@ -44,15 +44,15 @@ def loadData(catalog):
     """
     loadObras(catalog)
     loadArtistas(catalog)
-    loadNacionalidades(catalog)
 
 def loadObras(catalog):
+    """
+    Cargar las obras del archivo
+    """
     archivo_obras = cf.data_dir + 'Artworks-utf8-small.csv'
-
     input_file = csv.DictReader(open(archivo_obras, encoding='utf-8'))
-
     for obra in input_file:
-        model.addObra(catalog,obra)
+        model.addObra(catalog, obra)
 
 def loadArtistas(catalog):
     archivo_Artistas = cf.data_dir + 'Artists-utf8-small.csv'
@@ -62,20 +62,11 @@ def loadArtistas(catalog):
     for artista in input_file:
         model.addArtistas(catalog,artista)
 
-def loadNacionalidades(catalog):
-    archivo_naciones = cf.data_dir + 'Artworks-utf8-small.csv'
-
-    input_file = csv.DictReader(open(archivo_naciones, rncoding = 'utf-8'))
-
-    for nacion in input_file:
-        model.addnacion(catalog,nacion)
         
 def getNacionality(catalog, nacionality):
     nacionality = model.getObraNacion(catalog,  nacionality)
     return nacionality
-# Funciones de ordenamiento
 
-# Funciones de consulta sobre el catálogo
 
 def obrasSize (catalog):
 
@@ -84,3 +75,7 @@ def obrasSize (catalog):
 def artistaSize (catalog):
     
     return model.artistaSize(catalog)
+
+def nacionalitySize(catalog):
+
+    return model.nacionalitySize(catalog)

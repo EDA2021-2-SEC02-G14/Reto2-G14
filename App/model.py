@@ -40,16 +40,22 @@ los mismos.
 # Construccion de modelos
 
 def newCatalog():
-    catalog = { 'obras' : None,
-                'artistas' : None,
+    catalog = { 'Artworks' : None,
+                'Artists' : None,
                 'years' : None,
-                'Nacionality' : None}
+                'Nacionality' : None,
+                'ArtworksIds': None}
 
-    catalog['obras'] = lt.newList()
+    catalog['Artworks'] = lt.newList('SINGLE_LINKED', compareObrasIds)
 
-    catalog['artistas'] = mp.newMap(100.000,
-                                     maptype='PROBING', 
-                                     loadfactor = 0.5,  
+    catalog['ArtworksId'] = mp.newMap(150.000,
+                                    maptype = 'PROBING',
+                                    loadfactor=0.3,
+                                    comparefunction=compareObrasIds)
+
+    catalog['Artists'] = mp.newMap(16.000,
+                                     maptype='CHAINING', 
+                                     loadfactor = 4.0,  
                                      comparefunction= compareArtistName)
 
     catalog['years'] = mp.newMap(100, 
@@ -66,9 +72,9 @@ def newCatalog():
 
 
 
-# Funciones para agregar informacion al catalogo
-
-# Funciones para creacion de datos
+#
+# Crear
+#
 
 def newAuthor(name):
     """
@@ -77,32 +83,41 @@ def newAuthor(name):
     libros de dicho autor.
     """
     author = {'name': "",
-              "books": None,
+              "artworks": None,
               "average": 0,
               "average_rating": 0}
     author['name'] = name
-    author['books'] = lt.newList('SINGLE_LINKED', compareArtistName)
+    author['Artworks'] = lt.newList('SINGLE_LINKED', compareArtistName)
     return author
 
-# Funciones de consulta
+def newObraTag(name,  id):
+    """
+    crea relacion entre tag y obra
+    """
+    tag = {'name':'',
+           'tag_id':'',
+           'total_obras': 0,
+           'Artworks': None,
+           'count': 0.0}
+    tag['name']= name
+    tag['tag_id'] = id
+    tag['Artworks'] = lt.newList()
+    return tag
 
-# Funciones utilizadas para comparar elementos dentro de una lista
+#
+# Agregar
+#
 
-# Funciones de ordenamiento
 def addObra(catalog,obra):
-    lt.addLast(catalog['obras'],obra)
-    mp.put(catalog['obras'],obra['artworks'],obra)
-    artistas = obra['obras'].split(",")
-
-
-def compareMapYear(id, tag):
-    tagentry = me.getKey(tag)
-    if (id == tagentry):
-        return 0
-    elif (id > tagentry):
-        return 1
-    else:
-        return 0
+    """
+    Adiciona obra a la lista
+    """
+    lt.addLast(catalog['Artworks'], obra)
+    mp.put(catalog['ArtworksId'],obra['Title'],obra)
+    artistas = obra['Artists'].split(",")
+    for artista in artistas:
+        addObraAutor(catalog, artista.strip,obra)
+    addObraAnio(catalog, obra)
 
 def compareArtistName(keyname, author):
     """
@@ -117,6 +132,33 @@ def compareArtistName(keyname, author):
     else:
         return -1
 
+#
+# Consulta
+#
+
+def getObraNacion(catalog, nacionality):
+    nacion = mp.get(catalog['Nacionality'], nacionality)
+    if nacion:
+        return me.getValue(nacion)
+    return None
+
+#
+# Tamaños
+#
+
+def obrasSize(catalog):
+    return mp.size(catalog['Artworks'])
+
+def artistaSize (catalog):
+    return mp.size(catalog['Artists'])
+
+def nacionalitySize(catalog):
+    return mp.size(catalog['Nacionality'])
+
+#
+# Comparaciones
+#
+
 def compareNation(nacionality,tag):
     tagentry = me.getKey(tag)
     if(nacionality == tagentry):
@@ -126,24 +168,19 @@ def compareNation(nacionality,tag):
     else: 
         return -1 
 
-def addDepartment(catalog, department):
-    lt.addLast(catalog['Department'], department)
-    mp.put(catalog['Department'], department)
+def compareMapYear(id, tag):
+    tagentry = me.getKey(tag)
+    if (id == tagentry):
+        return 0
+    elif (id > tagentry):
+        return 1
+    else:
+        return 0
 
-def getDepartment(catalog, Department):
-    Department = mp.get(catalog['Department'], Department)
-    if Department:
-        return me.getValue(Department)['Department']
-    return None 
-
-def getObraNacion(catalog, nacionality):
-    nacion = mp.get(catalog['Nacionality'], nacionality)
-    if nacion:
-        return me.getValue(nacion)
-    return None
-
-def obrasSize(catalog):
-    return mp.size(catalog['obras'])
-
-def artistaSize (catalog):
-    return mp.size(catalog['artistas'])
+def compareObrasIds (id1,  id2):
+    if (id1 == id2):
+        return 0
+    elif id1 > id2: 
+        return 1
+    else:
+        return-1
