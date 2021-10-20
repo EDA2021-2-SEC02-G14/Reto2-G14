@@ -48,7 +48,7 @@ def newCatalog():
 
     catalog['Artworks'] = lt.newList('SINGLE_LINKED', compareObrasIds)
 
-    catalog['ArtworksId'] = mp.newMap(150.000,
+    catalog['ObjectID'] = mp.newMap(150.000,
                                     maptype = 'PROBING',
                                     loadfactor=0.3,
                                     comparefunction=compareObrasIds)
@@ -113,10 +113,10 @@ def addObra(catalog,obra):
     Adiciona obra a la lista
     """
     lt.addLast(catalog['Artworks'], obra)
-    mp.put(catalog['ArtworksId'],obra['Title'],obra)
+    mp.put(catalog['ObjectID'],obra['Title'],obra)
     artistas = obra['Artists'].split(",")
     for artista in artistas:
-        addObraAutor(catalog, artista.strip,obra)
+        addObraAutor(catalog, artista.strip(),obra)
     addObraAnio(catalog, obra)
 
 def compareArtistName(keyname, author):
@@ -132,15 +132,71 @@ def compareArtistName(keyname, author):
     else:
         return -1
 
+
+def addObraAutor(catalog, artistName, obra):
+
+    artistas = catalog['Artists']
+    existe = mp.contains(artistas,artistName)
+    if existe:
+        entry = mp.get(artistas,  artistName)
+        artista = me.getValue(entry)
+    else: 
+        artista = newAuthor(artistName)
+        mp.put(artistas, artistName,  artista)
+    lt.addLast(artistas['Artworks'],obra)
+    artista['average'] += float (obra['Classification'])
+    totObras = lt.size(artista['Artworks'])
+    if(totObras > 0 ): 
+        artista['Classification'] = artista ['average'] / totObras
+
+def addObraAnio(catalog,  obra):
+    try:
+        years = catalog['years']
+        if(obra['Date'] != ''):
+            puYear = obra['Date']
+            puYear = int(float(puYear))
+        else:
+            puYear = 2020
+        existe = mp.contains(years, puYear)
+        if existe:
+            entry = mp.get(years,  puYear)
+            year = me.getValue(entry)
+        else: 
+            year = newYear (puYear)
+            mp.put(years, puYear, year)
+        lt.addLast(year['Artworks'],  obra)
+    except Exception:
+        return None
+
+def newYear(yearP):
+    entry = {'year' : "", "obra": None}
+    entry['year'] = yearP
+    entry['Artworks']= lt.newList('SINGLE_LINKED',  compareYears)
+    return entry
+
 #
 # Consulta
 #
+
+def getObraAutor (catalog, artistaName):
+    artista = mp.get(catalog['Artists'], artistaName)
+    if artista:
+        return me.getValue(artista)
+    return None
+
 
 def getObraNacion(catalog, nacionality):
     nacion = mp.get(catalog['Nacionality'], nacionality)
     if nacion:
         return me.getValue(nacion)
     return None
+
+def getObraAnio(catalog, year):
+    year = mp.get(catalog['years'], year)
+    if year:
+        return me.getValue(year)['Artworks']
+    return None 
+
 
 #
 # Tamaños
@@ -184,3 +240,11 @@ def compareObrasIds (id1,  id2):
         return 1
     else:
         return-1
+
+def compareYears(year1, year2):
+    if (int(year1) == int(year2)):
+        return 0
+    elif (int(year1) > int(year2)):
+        return 1
+    else:
+        return 0
