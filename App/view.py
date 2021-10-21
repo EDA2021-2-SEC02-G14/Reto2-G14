@@ -76,13 +76,21 @@ while True:
         print("\nUltimos 3 artistas: ")
         controller.lastArtistas(catalog)
 
-    elif int(input[5])==5:
+    elif int(input[0])==5:
         obra = input("Buscando obras adquiridas en la fecha: " )
         initialDate = input("Fecha Inicial (YYYY-MM-DD): ")
         finalDate = input("Fecha Final (YYYY-MM-DD): ")
         obras  = controller.getObrasRango(cont, initialDate, finalDate)
         print("\nCrimenes en el rango de fechas: " + str(obras))
 
+    elif int(input[0]) ==6 : 
+        print("\nObras de un artista por tecnica: ")
+
+    elif int(input[0])==7:
+        print("\nObras por nacionalidades de los artistas: ")
+
+    elif int(input[0])==8:
+        print("\nCosto de transportar las obras: ")
 
     else:
         sys.exit(0)

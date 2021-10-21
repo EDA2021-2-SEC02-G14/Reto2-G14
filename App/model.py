@@ -224,10 +224,10 @@ def getArtistaAnio(catalog, initialD,  finalD):
     return totArt
 
 def getObrasRango(catalog,initialD,finalD) :
-    lista = om.values(catalog['Artworks'], initialD, finalD)
+    lista = om.values(catalog['DateAcquired'], initialD, finalD)
     totObras=0
     for fecha in lt.iterator(lista):
-           totObras += lt.size(fecha['Date'])
+           totObras += lt.size(fecha['DateAcquired'])
     return totObras
 
 def ultimosDatos(catalog):
