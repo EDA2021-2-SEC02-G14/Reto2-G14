@@ -20,8 +20,10 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from typing_extensions import final
 import config as cf
 import model
+import datetime
 import csv
 
 """
@@ -67,6 +69,27 @@ def getNacionality(catalog, nacionality):
     nacionality = model.getObraNacion(catalog,  nacionality)
     return nacionality
 
+def getArtistasRango(catalog, initialD,  finalD):
+    initialD = datetime.datetime.striptime(initialD, '%Y-%m-%d')
+    finalD = datetime.datetime.striptime(finalD, '%Y-%m-%d')
+    return model.getArtistasRango(catalog,initialD.date(),finalD.date())
+
+def getObrasRango(catalog, initialD, finalD):
+    initialD = datetime.datetime.strptime(initialD,  '%Y-%m-%d')
+    finalD = datetime.datetime.striptime(finalD, '%Y-%m-%d')
+    return model.getObrasRango(catalog,initialD.datet(),finalD.date())
+
+def lastObras(catalog):
+
+    model.ultimosDatos(catalog)
+
+def lastArtistas(catalog):
+    
+    model.ultimosArtistas(catalog)
+
+def getObraYear (catalog, year):
+    obras = model.getObraAnio(catalog, year)
+    return  obras
 
 def obrasSize (catalog):
 

@@ -71,6 +71,10 @@ while True:
         finalDate = input("Fecha Final (YYYY-MM-DD): ")
         artistas = controller.getArtistasRango(cont, initialDate,finalDate)
         print("\nCrimenes en el rango de fechas: " + str(artistas))
+        print("\nUltimas 3 obras:")
+        controller.lastObras(catalog)
+        print("\nUltimos 3 artistas: ")
+        controller.lastArtistas(catalog)
 
     elif int(input[5])==5:
         obra = input("Buscando obras adquiridas en la fecha: " )

@@ -230,6 +230,17 @@ def getObrasRango(catalog,initialD,finalD) :
            totObras += lt.size(fecha['Date'])
     return totObras
 
+def ultimosDatos(catalog):
+
+    for x in range(lt.size(catalog['Artworks']) -2, lt.size(catalog['Artworks']) +1):
+
+        print(lt.getElement(catalog['Artworks'],x)['Title'])
+
+
+def ultimosArtistas(catalog):
+    for x in range(lt.size(catalog['Artists']) -2, lt.size(catalog['Artists']) + 1):
+
+        print(lt.getElement(catalog['Artists'],x)['DisplayName'])
 
 
 #
