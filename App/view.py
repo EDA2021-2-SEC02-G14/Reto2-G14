@@ -65,6 +65,11 @@ while True:
         resultado = controller.getNacionality(cont, nacion)
         print(resultado)
 
+    elif int(inputs[0]) ==4:
+        nombre = input("Nombre del artista: ")
+
+        resultado = controller.getNacionality(cont, nacion)
+        print(resultado)
 
     else:
         sys.exit(0)

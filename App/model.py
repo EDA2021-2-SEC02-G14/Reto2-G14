@@ -44,6 +44,7 @@ def newCatalog():
                 'Artists' : None,
                 'years' : None,
                 'Nacionality' : None,
+                "ConstituentID", None,
                 'ArtworksIds': None}
 
     catalog['Artworks'] = lt.newList('SINGLE_LINKED', compareObrasIds)
@@ -64,6 +65,11 @@ def newCatalog():
                                 comparefunction=compareMapYear)
 
     catalog ['Nacionality'] = mp.newMap(194,
+                                        maptype='CHAINING',
+                                        loadfactor= 4.0,
+                                        comparefunction= compareNation)
+
+    catalog ['ConstituentID'] = mp.newMap(200,
                                         maptype='CHAINING',
                                         loadfactor= 4.0,
                                         comparefunction= compareNation)
@@ -131,7 +137,7 @@ def compareArtistName(keyname, author):
         return 1
     else:
         return -1
-
+def addArtista(catalog, )
 
 def addObraAutor(catalog, artistName, obra):
 
@@ -197,6 +203,11 @@ def getObraAnio(catalog, year):
         return me.getValue(year)['Artworks']
     return None 
 
+def req3(catalog, name):
+    nombre = catalog ['ConstituentID']
+    if nombre == name:
+
+    return 
 
 #
 # Tamaños
