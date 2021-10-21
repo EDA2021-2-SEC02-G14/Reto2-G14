@@ -25,10 +25,12 @@
  """
 
 
+from typing_extensions import final
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
+from DISClib.ADT import orderedmap as om
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
@@ -87,10 +89,10 @@ def newAuthor(name):
               "average": 0,
               "average_rating": 0}
     author['name'] = name
-    author['Artworks'] = lt.newList('SINGLE_LINKED', compareArtistName)
+    author['Artists'] = lt.newList('SINGLE_LINKED', compareArtistName)
     return author
 
-def newObraTag(name,  id):
+def newObraTag(name, id):
     """
     crea relacion entre tag y obra
     """
@@ -174,9 +176,26 @@ def newYear(yearP):
     entry['Artworks']= lt.newList('SINGLE_LINKED',  compareYears)
     return entry
 
+#    
+# Tamaños
+#
+
+def obrasSize(catalog):
+    return mp.size(catalog['Artworks'])
+
+def artistaSize (catalog):
+    return mp.size(catalog['Artists'])
+
+def nacionalitySize(catalog):
+    return mp.size(catalog['Nacionality'])
+
+def minKey(analyzer):
+    return om.minKey()
+
 #
 # Consulta
 #
+
 
 def getObraAutor (catalog, artistaName):
     artista = mp.get(catalog['Artists'], artistaName)
@@ -197,19 +216,21 @@ def getObraAnio(catalog, year):
         return me.getValue(year)['Artworks']
     return None 
 
+def getArtistaAnio(catalog, initialD,  finalD):
+    lista = om.values(catalog['ArtistBio'], initialD,finalD)
+    totArt = 0 
+    for fecha in lt.iterator(lista):
+        totArt += lt.size(fecha['Artists'])
+    return totArt
 
-#
-# Tamaños
-#
+def getObrasRango(catalog,initialD,finalD) :
+    lista = om.values(catalog['Artworks'], initialD, finalD)
+    totObras=0
+    for fecha in lt.iterator(lista):
+           totObras += lt.size(fecha['Date'])
+    return totObras
 
-def obrasSize(catalog):
-    return mp.size(catalog['Artworks'])
 
-def artistaSize (catalog):
-    return mp.size(catalog['Artists'])
-
-def nacionalitySize(catalog):
-    return mp.size(catalog['Nacionality'])
 
 #
 # Comparaciones

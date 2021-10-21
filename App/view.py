@@ -64,6 +64,20 @@ while True:
         nacion = input("Buscando nacionalidades?: ")
         resultado = controller.getNacionality(cont, nacion)
         print(resultado)
+    
+    elif int(inputs[0]) == 4:
+        cantidad = input("Buscando artistas entre: ")
+        initialDate = input("Fecha Inicial (YYYY-MM-DD): ")
+        finalDate = input("Fecha Final (YYYY-MM-DD): ")
+        artistas = controller.getArtistasRango(cont, initialDate,finalDate)
+        print("\nCrimenes en el rango de fechas: " + str(artistas))
+
+    elif int(input[5])==5:
+        obra = input("Buscando obras adquiridas en la fecha: " )
+        initialDate = input("Fecha Inicial (YYYY-MM-DD): ")
+        finalDate = input("Fecha Final (YYYY-MM-DD): ")
+        obras  = controller.getObrasRango(cont, initialDate, finalDate)
+        print("\nCrimenes en el rango de fechas: " + str(obras))
 
 
     else:
