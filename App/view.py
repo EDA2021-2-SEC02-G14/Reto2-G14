@@ -23,6 +23,7 @@
 import config as cf
 import sys
 import controller
+import csv
 from DISClib.ADT import list as lt
 assert cf
 
@@ -54,8 +55,7 @@ while True:
 
     elif int(inputs[0]) == 2:
         print("Cargando wey perate toy chiquito... :3")
-        controller.loadData(cont)
-
+        cont = controller.initCatalog()
         print("Cargando información de los archivos ....")
         print('Obras cargadas: ' + str(controller.obrasSize(cont)))
         print('Autores cargados: ' + str(controller.artistaSize(cont)))
