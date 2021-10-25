@@ -40,8 +40,8 @@ los mismos.
 # Construccion de modelos
 
 def newCatalog():
-    catalog = { 'Artists' : None,
-                'Artworks' : None,
+    catalog = { 'Artworks' : None,
+                'Artists' : None,
                 'years' : None,
                 'ArtistasTipo':None,
                 'Nacionality' : None,

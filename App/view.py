@@ -67,8 +67,8 @@ while True:
 
     elif int(inputs[0]) ==4:
         nombre = input("Nombre del artista: ")
-
-        resultado = controller.getNacionality(cont, nacion)
+        cont = controller.initCatalog()
+        resultado= controller.loadObras(cont)
         print(resultado)
 
     else:
