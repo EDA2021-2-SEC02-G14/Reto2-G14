@@ -47,23 +47,27 @@ def newCatalog():
                 'Nacionality' : None,
                 'ArtworksIds': None}
 
-    catalog['Artworks'] = lt.newList('SINGLE_LINKED', compareObrasIds)
+    catalog['Artworks'] = mp.newMap(250,
+                                    maptype = 'CHAINING',
+                                    loadfactor=0.3,
+                                    comparefunction=compareObrasIds)
     
-    
-    catalog['Artists'] = lt.newList('SINGLE_LINKED', compareObrasIds)
-
-
-    catalog['years'] = mp.newMap(150.000,
+    catalog['Artists'] = mp.newMap(250,
                                     maptype = 'CHAINING',
                                     loadfactor=0.3,
                                     comparefunction=compareObrasIds)
 
-    catalog['ObrasDates'] = mp.newMap(16.000,
+    catalog['years'] = mp.newMap(250,
+                                    maptype = 'CHAINING',
+                                    loadfactor=0.3,
+                                    comparefunction=compareObrasIds)
+
+    catalog['ObrasDates'] = mp.newMap(33000,
                                      maptype='PROBING', 
                                      loadfactor = 4.0,  
                                      comparefunction= compareArtistName)
 
-    catalog['ArtistasTipo'] = mp.newMap(100, 
+    catalog['ArtistasTipo'] = mp.newMap(15300, 
                                 maptype='PROBING', 
                                 loadfactor=4.0, 
                                 comparefunction=compareMapYear)
@@ -73,7 +77,7 @@ def newCatalog():
                                         loadfactor= 4.0,
                                         comparefunction= compareNation)
 
-    catalog ['Departamentos'] = mp.newMap(200,
+    catalog ['Departamentos'] = mp.newMap(20,
                                         maptype='PROBING',
                                         loadfactor= 4.0,
                                         comparefunction= compareNation)

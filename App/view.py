@@ -66,9 +66,9 @@ while True:
         print(resultado)
 
     elif int(inputs[0]) ==4:
-        nombre = input("Nombre del artista: ")
+        nombre = input("Examine the work of the artist named: ")
         cont = controller.initCatalog()
-        resultado= controller.loadObras(cont)
+        
         print(resultado)
 
     else:
