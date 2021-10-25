@@ -40,37 +40,41 @@ los mismos.
 # Construccion de modelos
 
 def newCatalog():
-    catalog = { 'Artworks' : None,
-                'Artists' : None,
+    catalog = { 'Artists' : None,
+                'Artworks' : None,
                 'years' : None,
+                'ArtistasTipo':None,
                 'Nacionality' : None,
-                "ConstituentID", None,
                 'ArtworksIds': None}
 
     catalog['Artworks'] = lt.newList('SINGLE_LINKED', compareObrasIds)
+    
+    
+    catalog['Artists'] = lt.newList('SINGLE_LINKED', compareObrasIds)
 
-    catalog['ObjectID'] = mp.newMap(150.000,
-                                    maptype = 'PROBING',
+
+    catalog['years'] = mp.newMap(150.000,
+                                    maptype = 'CHAINING',
                                     loadfactor=0.3,
                                     comparefunction=compareObrasIds)
 
-    catalog['Artists'] = mp.newMap(16.000,
-                                     maptype='CHAINING', 
+    catalog['ObrasDates'] = mp.newMap(16.000,
+                                     maptype='PROBING', 
                                      loadfactor = 4.0,  
                                      comparefunction= compareArtistName)
 
-    catalog['years'] = mp.newMap(100, 
-                                maptype='CHAINING', 
+    catalog['ArtistasTipo'] = mp.newMap(100, 
+                                maptype='PROBING', 
                                 loadfactor=4.0, 
                                 comparefunction=compareMapYear)
 
     catalog ['Nacionality'] = mp.newMap(194,
-                                        maptype='CHAINING',
+                                        maptype='PROBING',
                                         loadfactor= 4.0,
                                         comparefunction= compareNation)
 
-    catalog ['ConstituentID'] = mp.newMap(200,
-                                        maptype='CHAINING',
+    catalog ['Departamentos'] = mp.newMap(200,
+                                        maptype='PROBING',
                                         loadfactor= 4.0,
                                         comparefunction= compareNation)
 
@@ -137,8 +141,6 @@ def compareArtistName(keyname, author):
         return 1
     else:
         return -1
-def addArtista(catalog, )
-
 def addObraAutor(catalog, artistName, obra):
 
     artistas = catalog['Artists']
@@ -206,8 +208,8 @@ def getObraAnio(catalog, year):
 def req3(catalog, name):
     nombre = catalog ['ConstituentID']
     if nombre == name:
-
-    return 
+        print("")
+    return
 
 #
 # Tamaños
