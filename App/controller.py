@@ -49,7 +49,7 @@ def loadObras(catalog):
     """
     Cargar las obras del archivo
     """
-    archivo_obras = cf.data_dir + 'Artworks-utf8-small.csv'
+    archivo_obras = cf.data_dir + 'Artworks-utf8-10pct.csv'
     input_file = csv.DictReader(open(archivo_obras, encoding='utf-8'))
     for obra in input_file:
         model.addObra(catalog, obra)
