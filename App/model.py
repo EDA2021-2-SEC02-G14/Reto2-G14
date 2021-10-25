@@ -47,17 +47,11 @@ def newCatalog():
                 'Nacionality' : None,
                 'ArtworksIds': None}
 
-    catalog['Artworks'] = mp.newMap(250,
-                                    maptype = 'CHAINING',
-                                    loadfactor=0.3,
-                                    comparefunction=compareObrasIds)
+    catalog['Artworks'] = lt.newList("ARRAY_LIST")
     
-    catalog['Artists'] = mp.newMap(250,
-                                    maptype = 'CHAINING',
-                                    loadfactor=0.3,
-                                    comparefunction=compareObrasIds)
+    catalog['Artists'] =  lt.newList("ARRAY_LIST")
 
-    catalog['years'] = mp.newMap(250,
+    catalog['Years'] = mp.newMap(250,
                                     maptype = 'CHAINING',
                                     loadfactor=0.3,
                                     comparefunction=compareObrasIds)
@@ -133,6 +127,7 @@ def addObra(catalog,obra):
         addObraAutor(catalog, artista.strip(),obra)
     addObraAnio(catalog, obra)
 
+
 def compareArtistName(keyname, author):
     """
     Compara dos nombres de autor. El primero es una cadena
@@ -145,6 +140,8 @@ def compareArtistName(keyname, author):
         return 1
     else:
         return -1
+
+
 def addObraAutor(catalog, artistName, obra):
 
     artistas = catalog['Artists']
@@ -265,3 +262,26 @@ def compareYears(year1, year2):
         return 1
     else:
         return 0
+
+### Req 3 ###
+def newFecha(fecha):
+    
+    nuevaFecha = {"nueva":fecha, 
+                  "artista": lt.newList("ARRAY_LIST")  
+                    }
+    return nuevaFecha
+
+
+def diaAuthor(catalog, dia, artista):
+    
+    fecha = catalog["Years"]
+    existe = mp.contains(fecha, dia)
+    if existe == True:
+        entrada=mp.get(fecha, dia)
+        x=me.getValue(entrada)   
+    else:
+        x = newFecha(dia)
+        mp.put(fecha, dia, x)
+    lt.addLast(x["Artists"], artista)
+    return x
+
