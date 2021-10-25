@@ -109,7 +109,7 @@ def newObraTag(name,  id):
            'count': 0.0}
     tag['name']= name
     tag['tag_id'] = id
-    tag['Artworks'] = lt.newList()
+    tag['Artworks'] = lt.newList('SINGLE_LINKED', compareArtistName)
     return tag
 
 #
@@ -206,11 +206,7 @@ def getObraAnio(catalog, year):
         return me.getValue(year)['Artworks']
     return None 
 
-def req3(catalog, name):
-    nombre = catalog ['ConstituentID']
-    if nombre == name:
-        print("")
-    return
+
 
 #
 # Tamaños
@@ -263,7 +259,8 @@ def compareYears(year1, year2):
     else:
         return 0
 
-### Req 3 ###
+### Est-1 ###
+
 def newFecha(fecha):
     
     nuevaFecha = {"nueva":fecha, 
@@ -285,3 +282,14 @@ def diaAuthor(catalog, dia, artista):
     lt.addLast(x["Artists"], artista)
     return x
 
+### Req 3 ###
+def req3(catalog, name):
+    nombre = getObraAutor(catalog, name)
+
+    if name in nombre:
+        name= lt.newList("SINGLE_LINKED",cmpfunction=None)
+        lt.addFirst(name, nombre)
+
+    else: 
+        None
+    return name

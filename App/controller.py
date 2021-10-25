@@ -67,9 +67,9 @@ def getNacionality(catalog, nacionality):
     nacionality = model.getObraNacion(catalog,  nacionality)
     return nacionality
 
-def req3():
-    
-    return
+def req3(cont, nombre):
+    resultado= model.req3(cont, nombre) 
+    return resultado
 
 def obrasSize (catalog):
 

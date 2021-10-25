@@ -68,7 +68,7 @@ while True:
     elif int(inputs[0]) ==4:
         nombre = input("Examine the work of the artist named: ")
         cont = controller.initCatalog()
-        
+        resultado= controller.req3(cont, nombre)
         print(resultado)
 
     else:
